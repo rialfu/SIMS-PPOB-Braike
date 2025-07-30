@@ -1,0 +1,103 @@
+import React, { useEffect } from "react"
+import Slider from "react-slick";
+
+import { useState } from "react"
+import { useSelector} from "react-redux"
+import { useLoaderData, useNavigate } from "react-router"
+import Layout from '../layouts/base-header-profile'
+import apiClient from "../parameter/axios-global";
+
+export default function dashboard() {
+  const auth = useSelector((state)=>state.auth)
+  const data = useLoaderData()
+  const navigate = useNavigate()
+  const [services, setService] = useState([])
+  const [banner, setBanner] = useState([])
+  const toggleVisibility = () => {
+    
+  }
+  console.log(auth,data)
+  async function getService(){
+    try{
+        const resService = await apiClient.get('/services')
+        setService((resService.data?.data || [] ))
+      }catch(err){
+        console.log('erro',err)
+      }
+  }
+  function changePage(code){
+    console.log(code)
+    navigate(`/buy/${code}`)
+  }
+  async function getBanner(){
+    try{
+      const resBanner = await apiClient.get('/banner')
+      setBanner((resBanner.data?.data || [] ))
+    }catch(err){
+      console.log('erro',err)
+    }
+  }
+  useEffect(() => {
+    console.log('jalan pertama')
+    if(data === undefined){
+      getBanner()
+      getService()
+      return
+    }
+    console.log(data)
+    if(data['services'] === undefined){
+      getService()
+    }else{
+      setService(data['services'])
+    }
+    if(data['banner'] === undefined){
+      getBanner()
+    }else{
+      setBanner(data['banner'])
+    }
+    // console.log('Data dari loader:', initialData);
+    // Anda bisa melakukan pemrosesan lebih lanjut di sini jika diperlukan
+  }, []);
+  var settings = {
+    // dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    cssEase: "linear",
+  };
+  return (
+    
+    <div>
+      <Layout>
+        <>
+        <div className="my-5">
+        <div className="grid grid-cols-12">
+          {services.map((service, index)=>(<div className="col-span-1 cursor-pointer " onClick={()=>changePage(service.service_code)}>
+            <div className="w-full flex justify-center">
+              <img src={service.service_icon} className="rounded-lg" alt="" style={{height:'80px',width:'80px'}} />
+            </div>
+            
+            <p className="text-center text-lg">{service.service_name}</p>
+            </div>))}
+        </div>
+        
+       
+      </div>
+      <div className="mt-5">
+          <Slider {...settings}>
+            {banner.map((image, index) => (
+          <div key={index}>
+            <img src={image.banner_image} className="w-full px-3" alt={`Slide ${index}`} />
+          </div>
+        ))}
+          </Slider>
+
+      </div>
+        </>
+      </Layout>
+    </div>
+  )
+}
