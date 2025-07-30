@@ -6,7 +6,7 @@ import apiClient from "../parameter/axios-global";
 import { useLoaderData, useNavigate, useParams, } from "react-router"
 import Layout from '../layouts/base-header-profile'
 import { logout, updateSaldo } from "../state/auth-reducer";
-import imageDefault from '../assets/images/listrik.png'
+import imageDefault from '../assets/images/Listrik.png'
 import logo from '../assets/images/Logo.png'
 import successIcon from '../assets/images/check.png'
 import failedIcon from '../assets/images/cross.png'

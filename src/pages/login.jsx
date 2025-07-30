@@ -8,7 +8,7 @@ import apiClient from '../parameter/axios-global'
 // useNavigate
 
 import gambar from '../assets/images/Illustrasi Login.png'
-import logo from '../assets/images/logo.png'
+import logo from '../assets/images/Logo.png'
 
 
 

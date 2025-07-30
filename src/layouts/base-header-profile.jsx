@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, NavLink } from 'react-router';
-import logo from '../assets/images/logo.png'
+import logo from '../assets/images/Logo.png'
 import defaultPhoto from '../assets/images/Profile Photo.png'
 import { useDispatch, useSelector } from 'react-redux';
 import background from '../assets/images/Background Saldo.png'

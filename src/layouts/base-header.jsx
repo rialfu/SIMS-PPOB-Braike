@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router';
-import logo from '../assets/images/logo.png'
+import logo from '../assets/images/Logo.png'
 const Layout = ({ children }) => {
   return (
     <>
