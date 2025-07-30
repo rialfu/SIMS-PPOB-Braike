@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider,redirect, data } from "react-router";
+import { createBrowserRouter, RouterProvider,redirect, data, Navigate } from "react-router";
 // import { useSelector } from "react-redux";
 import { store } from "../state/store";
 import { logout, login } from "../state/auth-reducer";
@@ -132,6 +132,10 @@ const router = createBrowserRouter([
         element: <Account />,
         loader: authLoader,
     },
+    {
+        path:'*',
+        element:<Navigate to="/" replace/>
+    }
 ]);
 const AppRouter = () => {
     return <RouterProvider router={router} />;
