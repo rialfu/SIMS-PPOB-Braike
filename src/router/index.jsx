@@ -14,7 +14,7 @@ import Account from '../pages/account'
 const nonAuth = async ({request})=>{
     const {auth} = store.getState()
     const token = localStorage.getItem('authToken')
-    console.log('non', token)
+    
     if(token !== null){
         try{
             const res = await apiClient.get('/profile', )
@@ -45,21 +45,12 @@ const authLoader = async ({request})=>{
         if(token == null){
             store.dispatch(logout());
             return redirect('/')
-        } 
+        }
+        let dataProfile = null 
         try{
             const res = await apiClient.get('/profile', ) 
-            const dataProfile = res.data.data
-            const res3 =await apiClient.get('/balance', ) 
-            const balance= res3.data.data['balance'] ?? 0
-            console.log(res3.data.data, dataProfile)
-            store.dispatch(login({
-                token,
-                email: dataProfile['email'],
-                first_name: dataProfile['first_name'],
-                last_name: dataProfile['last_name'],
-                profile:dataProfile['profile_image'],
-                balance,
-            }))
+            dataProfile = res.data.data
+            
         }catch(err){
             console.log(err)
             let data = err.response?.data || null
@@ -69,6 +60,27 @@ const authLoader = async ({request})=>{
                 return redirect('/')
             }
         }
+        let balance = 0
+        try{
+            const res3 =await apiClient.get('/balance', ) 
+            balance = res3.data.data['balance'] ?? 0
+            
+        }catch(err){
+            let data = err.response?.data || null
+            if(data['status']== 108){
+                localStorage.removeItem('authToken')
+                store.dispatch(logout());
+                return redirect('/')
+            }
+        }
+        store.dispatch(login({
+            token,
+            email: dataProfile['email'],
+            first_name: dataProfile['first_name'],
+            last_name: dataProfile['last_name'],
+            profile:dataProfile['profile_image'],
+            balance,
+        }))
         const fullUrl = request.url;
         
         const url = new URL(fullUrl);
@@ -92,7 +104,7 @@ const authLoader = async ({request})=>{
             return {services, banner}
             
         }
-        console.log(request)
+        
         
     }
 }
@@ -105,7 +117,7 @@ const router = createBrowserRouter([
     {
         path: '/dashboard',
         element: <Dashboard />,
-        loader: authLoader, // Pasang loader di sini
+        loader: authLoader, 
     },
     {
         path: '/register',

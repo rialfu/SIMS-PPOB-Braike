@@ -8,6 +8,7 @@ import successIcon from '../assets/images/check.png'
 import failedIcon from '../assets/images/cross.png'
 import apiClient from "../parameter/axios-global";
 import { logout, updateSaldo } from "../state/auth-reducer";
+import { formatterIDR } from "../parameter/tools"
 
 export default function dashboard() {
     const navigate = useNavigate()
@@ -75,12 +76,7 @@ export default function dashboard() {
             setJumlah('')
         }
     }
-    const formatterIDR = new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-    });
+    
   return (
     
     <div>
@@ -124,6 +120,7 @@ export default function dashboard() {
                         className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed"
                         disabled={jumlah == '' || (jumlah < 10000) || (jumlah > 1000000)}
                         onClick={handle}
+                        style={{height:'50px'}}
                     >
                         Submit
                     </button>
@@ -132,7 +129,7 @@ export default function dashboard() {
                     <div className="grid grid-cols-6">
                         {
                             [10000, 20000, 50000, 100000,250000, 500000].map((money, index)=>(
-                                <div className="flex justify-center items-center col-span-2 px-3 py-2 mx-1 md:mx-2 hover:bg-red-500 hover:text-white mb-2 font-semibold rounded-lg shadow-md transition duration-200 ease-in-out" onClick={()=>changeValue(money+'')} style={{height:'50px'}} key={index}>
+                                <div className="flex justify-center cursor-pointer items-center col-span-2 px-3 py-2 mx-1 md:mx-2 hover:bg-red-500 hover:text-white mb-2 font-semibold rounded-lg shadow-md transition duration-200 ease-in-out" onClick={()=>changeValue(money+'')} style={{height:'50px'}} key={index}>
                                     {formatterIDR.format(money)}
                                     {/* <button  onClick={()=>changeValue(money+'')}
                                     className="w-full  h-full text-sm md:text-lg bg-white-600 hover:bg-white-700  font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white-500 focus:ring-opacity-75">

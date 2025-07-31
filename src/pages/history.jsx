@@ -4,7 +4,7 @@ import Layout from '../layouts/base-header-profile'
 import { logout } from "../state/auth-reducer"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router"
-
+import { formatterIDR } from "../parameter/tools"
 export default function history() {
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -36,12 +36,7 @@ export default function history() {
         }
         
     }
-    const formatterIDR = new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-    });
+    
     function changeTime(date){
         date = new Date(date)
         const options = {
@@ -71,7 +66,8 @@ export default function history() {
                     
                 </div>)}
                 {control.isNext?
-                <p className="text-center mt-4 text-red-500 font-medium cursor-pointer" onClick={()=>getHistory()}>Load More</p>:
+                    (control.isLoad? <p className="text-center mt-4 text-red-500 font-medium">Please Wait</p>:
+                    <p className="text-center mt-4 text-red-500 font-medium cursor-pointer" onClick={()=>getHistory()}>Load More</p>):
                 <>
                 
                 </>}

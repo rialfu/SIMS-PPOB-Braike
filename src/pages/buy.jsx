@@ -10,15 +10,23 @@ import imageDefault from '../assets/images/Listrik.png'
 import logo from '../assets/images/Logo.png'
 import successIcon from '../assets/images/check.png'
 import failedIcon from '../assets/images/cross.png'
+import { formatterIDR } from "../parameter/tools";
 
 export default function dashboard() {
     const navigate= useNavigate()
     const dispatch  = useDispatch()
-    const [isLoad, setIsLoad] =useState(true)
+
+    const [formData, setFormData] = useState({
+        'isLoad': true,
+        'category': null,
+        'confDialog':false,
+        'messageDialog':{
+            'open':false,
+            'status':null,
+            'message':'',
+        }
+    })
     const { param } = useParams();
-    const [category, setCategory] =useState(null)
-    const [confDialog, setConfDialog] = useState(false)
-    const [messageDialog, setMessageDialog] = useState({'open':false, 'status':null, 'message':''})
 
     async function getService() {
         try{
@@ -29,8 +37,10 @@ export default function dashboard() {
                 navigate('/dashboard')
                 return
             }
-            console.log(single)
-            setCategory(single)
+            setFormData({...formData, isLoad:false, category:single})
+            return
+            // console.log(single)
+            // setCategory(single)
         }catch(err){
             console.log(err)
             let data = err.response?.data || null
@@ -43,25 +53,42 @@ export default function dashboard() {
             alert('something is wrong')
             navigate('/dashboard')
         }
-        setIsLoad(false)
+        setFormData({...formData, isLoad:false,category:null})
+        // setIsLoad(false)
     }
     useEffect( ()=>{
         getService()
     }, [])
     const handle = (e) => {
-        if(isLoad) return;
-        setConfDialog(true)
+        if(formData.isLoad) return;
+        setFormData({...formData, confDialog:true})
+        // setConfDialog(true)
     }
-
-    const process = async ()=>{
-        
-        setIsLoad(true)
-        setConfDialog(false)
+    const processUpdateSaldo =async ()=>{
         try{
-            const res = await apiClient.post('/transaction',{"service_code":category?.service_code ?? ''})
-            console.log(res)
-            setMessageDialog({open:true, status:true, message:''})
-            setIsLoad(false)
+            const res3 =await apiClient.get('/balance', ) 
+            let balance = res3.data.data['balance'] ?? 0
+            dispatch(updateSaldo(balance))
+        }catch(err){
+            let data = err.response?.data || null
+            if(data['status']== 108){
+                localStorage.removeItem('authToken')
+                store.dispatch(logout());
+                return redirect('/')
+            }
+        }
+    }
+    const process = async ()=>{
+        setFormData({...formData, isLoad:true, confDialog:false})
+        // setIsLoad(true)
+        // setConfDialog(false)
+        try{
+            const res = await apiClient.post('/transaction',{"service_code":formData.category?.service_code ?? ''})
+            await processUpdateSaldo()
+            setFormData({...formData, isLoad:false, confDialog:false, messageDialog:{open:true, status:true, message:''}})
+            return;
+            // setMessageDialog({open:true, status:true, message:''})
+            // setIsLoad(false)
         }catch(err){
             let data = err.response?.data || null
             if(data != null && data['status']== 108){
@@ -69,26 +96,16 @@ export default function dashboard() {
                 dispatch(logout());
                 return navigate('/')
             }
-            setMessageDialog({open:true, status:false, message:(data?.message ?? 'Something is wrong')})
-            setIsLoad(false)
+            setFormData({...formData, isLoad:false, confDialog:false, messageDialog:{open:true, status:false, message:data?.message ?? 'Something is wrong'}})
+            // setMessageDialog({open:true, status:false, message:(data?.message ?? 'Something is wrong')})
+            // setIsLoad(false)
             return
         }
-        try{
-            const res3 =await apiClient.get('/balance', ) 
-            const balance= res3.data.data['balance'] ?? 0
-            dispatch(updateSaldo(balance))
-        }catch(err){
-
-        }
+        
         
         
     }
-    const formatterIDR = new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-    });
+    
   return (
     
     <div>
@@ -100,8 +117,8 @@ export default function dashboard() {
         <div className="mx-4">
             <p className="text-lg font-normal">PemBayaran</p>
             <div className="flex items-center mb-5">
-                <img src={category != null? category.service_icon : imageDefault} style={{height:'40px', width:'40px'}} alt="" />
-                <p className="mx-2 text-lg font-semibold">{category?.service_name ?? ''}</p>
+                <img src={formData.category != null? formData.category.service_icon : imageDefault} style={{height:'40px', width:'40px'}} alt="" />
+                <p className="mx-2 text-lg font-semibold">{formData.category?.service_name ?? ''}</p>
             </div>
             <div className="relative flex items-center w-full mb-4">
                         
@@ -126,7 +143,7 @@ export default function dashboard() {
 
                 <input
                     type="text"
-                    value={formatterIDR.format(category != null ? category.service_tariff:0).replace(/\.\,/g, '')} 
+                    value={formatterIDR.format(formData.category != null ? formData.category.service_tariff:0).replace(/\.\,/g, '')} 
                     placeholder="Search anything..."
                     readOnly="true"
                     style={{height:'50px'}}
@@ -134,48 +151,48 @@ export default function dashboard() {
                 />
             </div>
             <button
-                className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed"
-                
+                className="w-full disabled:bg-red-300 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 disabled:opacity-50 disabled:bg-gray-500 disabled:cursor-not-allowed"
+                disabled={formData.isLoad}
                 onClick={handle}
             >
                 Bayar
             </button>
         </div>
-        <div id="confirmationModal" className={["  inset-0 flex items-center justify-center modal-overlay bg-gray-500 bg-opacity-50", messageDialog.open?'fixed':'hidden'].join(' ')}>
+        <div id="confirmationModal" className={["  inset-0 flex items-center justify-center modal-overlay bg-gray-500 bg-opacity-50", formData.messageDialog.open?'fixed':'hidden'].join(' ')}>
             <div className="bg-white p-8 rounded-lg shadow-2xl max-w-80 md:max-w-sm w-full text-center">
             
                 <div className="flex justify-center mb-4">
-                    <img src={messageDialog.status===true? successIcon: failedIcon} style={{height:'50px', width:'50px'}} alt="" />
+                    <img src={formData.messageDialog.status===true? successIcon: failedIcon} style={{height:'50px', width:'50px'}} alt="" />
                 </div>
 
-                <p className="text-lg text-gray-700 mb-2">Pembayaran {category?.service_name ?? ''} sebesar</p>
-                <p id="modalAmount" className="text-2xl font-bold ">{formatterIDR.format(category != null ? category.service_tariff:0).replace(/\.\,/g, '')}</p>
-                <p>{messageDialog.status === true?'Berhasil!':'Gagal!'}</p>
-                <p>{messageDialog.status === true?'':messageDialog.message}</p>
+                <p className="text-lg text-gray-700 mb-2">Pembayaran {formData.category?.service_name ?? ''} sebesar</p>
+                <p id="modalAmount" className="text-2xl font-bold ">{formatterIDR.format(formData.category != null ? formData.category.service_tariff:0).replace(/\.\,/g, '')}</p>
+                <p>{formData.messageDialog.status === true?'Berhasil!':'Gagal!'}</p>
+                <p>{formData.messageDialog.status === true?'':formData.messageDialog.message}</p>
                 <div className="flex flex-col space-y-3 mt-6">
                     
-                    <p className="text-red-500 hover:text-red-700 cursor-pointer" onClick={()=>messageDialog.status===false? setMessageDialog({open:false, status:null, message:''}) : navigate('/dashboard')}>
+                    <p className="text-red-500 hover:text-red-700 cursor-pointer" onClick={()=>formData.messageDialog.status===false? setFormData({...formData, messageDialog:{open:false, status:null, message:''}}) : navigate('/dashboard')}>
                         Kembali ke beranda
                     </p>
                     
                 </div>
             </div>
         </div>
-        <div id="confirmationModal1" className={["  inset-0 flex items-center justify-center modal-overlay bg-gray-500 bg-opacity-50", confDialog?'fixed':'hidden'].join(' ')}>
+        <div id="confirmationModal1" className={["  inset-0 flex items-center justify-center modal-overlay bg-gray-500 bg-opacity-50", formData.confDialog?'fixed':'hidden'].join(' ')}>
             <div className="bg-white p-8 rounded-lg shadow-2xl max-w-80 md:max-w-sm w-full text-center">
             
                 <div className="flex justify-center mb-4">
                     <img src={logo} style={{height:'50px', width:'50px'}} alt="" />
                 </div>
 
-                <p className="text-lg text-gray-700 mb-2">Beli {category?.service_name ?? ''} senilai</p>
-                <p id="modalAmount" className="text-2xl font-bold  mb-6">{formatterIDR.format(category != null ? category.service_tariff:0).replace(/\.\,/g, '')} ?</p>
+                <p className="text-lg text-gray-700 mb-2">Beli {formData.category?.service_name ?? ''} senilai</p>
+                <p id="modalAmount" className="text-2xl font-bold  mb-6">{formatterIDR.format(formData.category != null ? formData.category.service_tariff:0).replace(/\.\,/g, '')} ?</p>
 
                 <div className="flex flex-col space-y-3">
                     <p className="text-red-500 hover:text-red-700 cursor-pointer" onClick={()=>process()}>
                         Ya, lanjutkan Bayar
                     </p>
-                    <p className="text-gray-300 hover:text-gray-500 cursor-pointer" onClick={()=>setConfDialog(false)}>
+                    <p className="text-gray-300 hover:text-gray-500 cursor-pointer" onClick={()=>setFormData({...formData, confDialog:false})}>
                         Batalkan
                     </p>
                     

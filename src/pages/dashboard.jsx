@@ -96,12 +96,14 @@ export default function dashboard() {
         <>
         <div className="my-5">
         <div className="grid grid-cols-12">
-          {services.map((service, index)=>(<div className="col-span-4 sm:col-span-2 md:col-span-1 cursor-pointer " key={index} onClick={()=>changePage(service.service_code)}>
+          {services.map((service, index)=>(<div className="col-span-4 sm:col-span-2 md:col-span-1 cursor-pointer mb-2" key={index} onClick={()=>changePage(service.service_code)}>
             <div className="w-full flex justify-center">
               <img src={service.service_icon} className="rounded-lg w-16 h-16 md:w-24 md:h-24" alt="" style={{}} />
             </div>
-            
-            <p className="text-center text-sm md:text-md 2xl:text-lg">{service.service_name}</p>
+            <div className="text-center text-sm md:text-md 2xl:text-lg h-12 md:h-32">
+              {service.service_name}
+            </div>
+            {/* <p className="text-center text-sm md:text-md 2xl:text-lg"></p> */}
             </div>))}
         </div>
         
