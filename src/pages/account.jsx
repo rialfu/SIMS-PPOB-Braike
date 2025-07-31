@@ -147,7 +147,7 @@ export default function history() {
     },[])
     return (<>
         <Layout>
-            <div className="max-w-4xl w-full mx-auto">
+            <div className="md:max-w-4xl w-full mx-auto px-4 md:px-0">
                 <div className="flex justify-center flex-col items-center ">
                     <div className="relative w-28 h-28">
                         <img src={auth.profile.includes('/null') ?defaultPhoto: auth.profile} className="w-full rounded-full" alt="" />

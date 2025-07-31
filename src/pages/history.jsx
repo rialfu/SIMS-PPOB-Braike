@@ -60,7 +60,7 @@ export default function history() {
     },[])
     return (<>
         <Layout>
-            <div className="pb-4 mt-3">
+            <div className="pb-4 mt-3 mx-4">
                 <p className="font-medium text-xl mb-3">Semua Transaksi</p>
                 {history.map((data,index)=><div className="flex p-3 justify-between border rounded-md mb-4">
                     <div>
