@@ -64,10 +64,10 @@ export default function history() {
                 <p className="font-medium text-xl mb-3">Semua Transaksi</p>
                 {history.map((data,index)=><div className="flex p-3 justify-between border rounded-md mb-4">
                     <div>
-                        <p className={['text-2xl font-medium', data.transaction_type === 'PAYMENT'?'text-red-500':'text-green-500'].join(' ')}>{data.transaction_type === 'PAYMENT'?'-':'+'} {formatterIDR.format(data.total_amount) }</p>
-                        <p>{changeTime(data.created_on)}</p>
+                        <p className={['text-lg md:text-2xl font-medium', data.transaction_type === 'PAYMENT'?'text-red-500':'text-green-500'].join(' ')}>{data.transaction_type === 'PAYMENT'?'-':'+'} {formatterIDR.format(data.total_amount) }</p>
+                        <p className="text-sm md:text-lg">{changeTime(data.created_on)}</p>
                     </div>
-                    <p className="text-lg">{data.description}</p>
+                    <p className="text-sm md:text-lg">{data.description}</p>
                     
                 </div>)}
                 {control.isNext?
