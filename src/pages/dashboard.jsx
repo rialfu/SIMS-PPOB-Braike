@@ -80,7 +80,7 @@ export default function dashboard() {
               <img src={service.service_icon} className="rounded-lg" alt="" style={{height:'80px',width:'80px'}} />
             </div>
             
-            <p className="text-center text-md lg:text-lg">{service.service_name}</p>
+            <p className="text-center text-sm lg:text-lg">{service.service_name}</p>
             </div>))}
         </div>
         

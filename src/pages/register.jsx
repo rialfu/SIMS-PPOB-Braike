@@ -118,7 +118,7 @@ export default function Register() {
     <div className="" style={{height:'100vh'}}>
       <div className="flex w-full h-full ">
 
-        <div className="w-1/2 flex items-center justify-center bg-white p-8">
+        <div className="w-full md:w-1/2 flex items-center justify-center bg-white p-8">
             <div className="max-w-sm w-full space-y-6">
                 <div className="flex items-center justify-center mb-6 ">
                    
