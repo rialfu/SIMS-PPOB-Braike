@@ -8,6 +8,7 @@ import { useState } from "react"
 // import Image from "next/image"
 import gambar from '../assets/images/Illustrasi Login.png'
 import logo from '../assets/images/Logo.png'
+import { NavLink } from "react-router"
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false)
@@ -245,7 +246,7 @@ export default function Register() {
                 </button>
 
                 <p className="text-center text-sm text-gray-600">
-                    sudah punya akun? login <a href="/" className="text-red-500 hover:underline font-medium">di sini</a>
+                    sudah punya akun? login <NavLink className="text-red-500 hover:underline font-medium" to="/">di sini</NavLink> 
                 </p>
             </div>
         </div>

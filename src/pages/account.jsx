@@ -150,7 +150,7 @@ export default function history() {
             <div className="md:max-w-4xl w-full mx-auto px-4 md:px-0">
                 <div className="flex justify-center flex-col items-center ">
                     <div className="relative w-28 h-28">
-                        <img src={auth.profile.includes('/null') ?defaultPhoto: auth.profile} className="w-16 h-16 md:w-24 md:h-24 rounded-full" alt="" />
+                        <img src={auth.profile.includes('/null') ?defaultPhoto: auth.profile} className="w-full h-full rounded-full" alt="" />
                         <div className="absolute border border-black bg-white rounded-full p-1" style={{bottom:0, right:0}} onClick={()=>openFile()}>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 20H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
