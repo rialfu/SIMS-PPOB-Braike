@@ -50,8 +50,8 @@ export default function history() {
             day: '2-digit',
             hour: '2-digit',
             minute: '2-digit',
-            timeZoneName: 'shortOffset', // Menampilkan offset zona waktu seperti "+0700"
-            hour12: false // Menggunakan format 24 jam
+            timeZoneName: 'shortOffset', 
+            hour12: false 
         };
         return date.toLocaleString('id-ID', options).replace('pukul','').replace('GMT+7','WIB').replace('GMT+8','WITA').replace('GMT+9','WIT');
     }

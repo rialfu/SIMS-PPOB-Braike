@@ -55,8 +55,7 @@ export default function dashboard() {
     }else{
       setBanner(data['banner'])
     }
-    // console.log('Data dari loader:', initialData);
-    // Anda bisa melakukan pemrosesan lebih lanjut di sini jika diperlukan
+    
   }, []);
   var settings = {
     // dots: true,
@@ -69,23 +68,23 @@ export default function dashboard() {
     cssEase: "linear",
     responsive: [
       {
-        breakpoint: 1024, // Applies to screens smaller than 1024px
+        breakpoint: 1024, 
         settings: {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true,
-          arrows: true, // Keep arrows on tablet
+          // dots: true,
+          // arrows: true, 
         }
       },
       {
-        breakpoint: 600, // Applies to screens smaller than 600px
+        breakpoint: 600, 
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
-          dots: false, // Hide dots on mobile
-          arrows: false, // Hide arrows on mobile
+          dots: false, 
+          arrows: false, 
         }
       },
     ]

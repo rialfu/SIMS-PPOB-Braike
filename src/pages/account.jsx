@@ -101,7 +101,6 @@ export default function history() {
                 return
             }
             if (!ALLOWED_FILE_TYPES.includes(file.type)) {
-                // Penting: Kosongkan input file agar pengguna bisa memilih ulang
                 event.target.value = null;
                 alert('File hanya mendukung JPG dan PNG')
                 return;
@@ -126,44 +125,16 @@ export default function history() {
             return
             const reader = new FileReader();
             reader.onload = async(e) => {
-                // e.target.result akan berisi ArrayBuffer
                 const arrayBuffer = e.target.result;
                 console.log(arrayBuffer)
                 event.target.value = null;
-                
-                // Untuk melihat data biner, Anda bisa membuat Uint8Array dari ArrayBuffer
-                // const uint8Array = new Uint8Array(arrayBuffer);
-
-                // setBinaryDataInfo(
-                //     `File berhasil diubah ke binary (ArrayBuffer).\n` +
-                //     `Ukuran ArrayBuffer: ${arrayBuffer.byteLength} bytes\n` +
-                //     `Beberapa byte pertama (Uint8Array): [${uint8Array.slice(0, 10).join(', ')}]...`
-                // );
-                // console.log('ArrayBuffer:', arrayBuffer);
-                // console.log('Uint8Array (first 10 bytes):', uint8Array.slice(0, 10));
-
-                // Di sini Anda bisa mengirim arrayBuffer ini ke server
-                // atau memprosesnya lebih lanjut (misal, untuk parsing file tertentu)
             };
             reader.onerror = () => {
                 alert('Something is wrong, file cant process')
                 console.error('Error membaca file:', reader.error);
             };
             reader.readAsArrayBuffer(file); 
-                // setSelectedFileName(file.name);
-                // setError(''); // Hapus error sebelumnya
-
-                // // Optional: Langsung baca file setelah dipilih
-                // const reader = new FileReader();
-                // reader.onload = (e) => {
-                //     setFileContent(e.target.result);
-                //     console.log('Konten file (dari input tersembunyi):', e.target.result.substring(0, 100) + '...');
-                // };
-                // reader.onerror = () => {
-                //     setError('Gagal membaca file.');
-                //     console.error('Error membaca file:', reader.error);
-                // };
-                // reader.readAsText(file); // Atau readAsDataURL untuk gambar
+            
         } else {
 
             // setSelectedFileName('');

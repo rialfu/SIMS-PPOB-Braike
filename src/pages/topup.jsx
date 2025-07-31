@@ -132,7 +132,7 @@ export default function dashboard() {
                     <div className="grid grid-cols-6">
                         {
                             [10000, 20000, 50000, 100000,250000, 500000].map((money, index)=>(
-                                <div className="col-span-2 px-2 pb-2" style={{height:'50px'}}>
+                                <div className="col-span-2 px-2 mb-2" style={{height:'50px'}}>
                                     <button  onClick={()=>changeValue(money+'')}
                                     className="w-full h-full text-sm md:text-lg bg-white-600 hover:bg-white-700  font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white-500 focus:ring-opacity-75">
                                         {formatterIDR.format(money)}
