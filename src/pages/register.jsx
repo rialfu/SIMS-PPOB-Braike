@@ -12,7 +12,7 @@ import { NavLink } from "react-router"
 import apiClient from "../parameter/axios-global"
 
 export default function Register() {
-  const [confDialog, setConfDialog] = useState(true)
+  const [confDialog, setConfDialog] = useState(false)
   const [formData, setFormData] = useState({
     'isi':{
       'email':'',
