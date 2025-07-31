@@ -87,8 +87,8 @@ export default function dashboard() {
       <Layout>
         <>
         <div className="mx-4">
-            <p className="text-md">Silahkan Masukkan</p>
-            <p className="text-2xl">Nominal Top Up</p>
+            <p className="text-sm md:text-md">Silahkan Masukkan</p>
+            <p className="text-lg md:text-2xl">Nominal Top Up</p>
             <div className="grid grid-cols-12 mt-4">
                 <div className="col-span-12 md:col-span-8 sm:col-span-6">
                     <div className="relative flex items-center w-full mb-2">
@@ -134,7 +134,7 @@ export default function dashboard() {
                             [10000, 20000, 50000, 100000,250000, 500000].map((money, index)=>(
                                 <div className="col-span-2 px-2 pb-2" style={{height:'50px'}}>
                                     <button  onClick={()=>changeValue(money+'')}
-                                    className="w-full h-full text-lg bg-white-600 hover:bg-white-700  font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white-500 focus:ring-opacity-75">
+                                    className="w-full h-full text-sm md:text-lg bg-white-600 hover:bg-white-700  font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white-500 focus:ring-opacity-75">
                                         {formatterIDR.format(money)}
                                     </button>
                                 </div>
