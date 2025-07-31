@@ -132,7 +132,7 @@ export default function dashboard() {
                     <div className="grid grid-cols-6">
                         {
                             [10000, 20000, 50000, 100000,250000, 500000].map((money, index)=>(
-                                <div className="flex justify-center items-center col-span-2 px-3 py-2 mb-2 font-semibold rounded-lg shadow-md transition duration-200 ease-in-out" onClick={()=>changeValue(money+'')} style={{height:'50px'}} key={index}>
+                                <div className="flex justify-center items-center col-span-2 px-3 py-2 mx-2 hover:bg-slate-300 mb-2 font-semibold rounded-lg shadow-md transition duration-200 ease-in-out" onClick={()=>changeValue(money+'')} style={{height:'50px'}} key={index}>
                                     {formatterIDR.format(money)}
                                     {/* <button  onClick={()=>changeValue(money+'')}
                                     className="w-full  h-full text-sm md:text-lg bg-white-600 hover:bg-white-700  font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-white-500 focus:ring-opacity-75">
