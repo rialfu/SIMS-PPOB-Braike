@@ -142,7 +142,7 @@ export default function dashboard() {
             </button>
         </div>
         <div id="confirmationModal" className={["  inset-0 flex items-center justify-center modal-overlay bg-gray-500 bg-opacity-50", messageDialog.open?'fixed':'hidden'].join(' ')}>
-            <div className="bg-white p-8 rounded-lg shadow-2xl max-w-sm w-full text-center">
+            <div className="bg-white p-8 rounded-lg shadow-2xl max-w-80 md:max-w-sm w-full text-center">
             
                 <div className="flex justify-center mb-4">
                     <img src={messageDialog.status===true? successIcon: failedIcon} style={{height:'50px', width:'50px'}} alt="" />
@@ -162,7 +162,7 @@ export default function dashboard() {
             </div>
         </div>
         <div id="confirmationModal1" className={["  inset-0 flex items-center justify-center modal-overlay bg-gray-500 bg-opacity-50", confDialog?'fixed':'hidden'].join(' ')}>
-            <div className="bg-white p-8 rounded-lg shadow-2xl max-w-sm w-full text-center">
+            <div className="bg-white p-8 rounded-lg shadow-2xl max-w-80 md:max-w-sm w-full text-center">
             
                 <div className="flex justify-center mb-4">
                     <img src={logo} style={{height:'50px', width:'50px'}} alt="" />
