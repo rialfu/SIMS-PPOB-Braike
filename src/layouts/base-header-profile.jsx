@@ -34,7 +34,7 @@ const Layout = ({ children }) => {
                 </nav>
             </div>
         </header>
-        <div className="container mx-auto">
+        <div className="container mx-auto px-4 mb-2 md:px-0 ">
         <div className="grid grid-cols-12 px-4 mt-4 mb-3">
             <div className="col-span-12 sm:col-span-6 md:col-span-6">
                 <img src={auth.profile.includes('/null') ?defaultPhoto: auth.profile} className="w-14 h-14 rounded-full" alt="" />

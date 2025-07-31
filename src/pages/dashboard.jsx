@@ -67,6 +67,28 @@ export default function dashboard() {
     autoplay: true,
     autoplaySpeed: 2000,
     cssEase: "linear",
+    responsive: [
+      {
+        breakpoint: 1024, // Applies to screens smaller than 1024px
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+          arrows: true, // Keep arrows on tablet
+        }
+      },
+      {
+        breakpoint: 600, // Applies to screens smaller than 600px
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 0,
+          dots: false, // Hide dots on mobile
+          arrows: false, // Hide arrows on mobile
+        }
+      },
+    ]
   };
   return (
     
