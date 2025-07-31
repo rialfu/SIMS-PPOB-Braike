@@ -155,7 +155,7 @@ export default function Login() {
             </div>
         </div>
 
-        <div className="w-1/2 bg-red-100 flex items-center justify-center relative overflow-hidden">
+        <div className="hidden w-1/2 bg-red-100 md:flex items-center justify-center relative overflow-hidden">
             <img src={gambar} alt="" style={{objectFit:'fill', width:'100%'}} />
 {/*             
             <div className="w-4/5 h-4/5 bg-red-200 rounded-full flex items-center justify-center text-gray-600 text-lg font-semibold opacity-0">
