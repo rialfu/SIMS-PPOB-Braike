@@ -87,21 +87,21 @@ const authLoader = async ({request})=>{
 
         const pathname = url.pathname;
         if(pathname == '/dashboard'){
-            let services =[]
-            let banner = []
-            try{
-                const resService = await apiClient.get('/services')
-                services = [...(resService.data?.data || [] )]
-            }catch(err){
-                console.log('erro',err)
-            }
-            try{
-                const resBanner = await apiClient.get('/banner')
-                banner = [...(resBanner.data?.data || [] )]
-            }catch(err){
-                console.log('erro',err)
-            }
-            return {services, banner}
+            // let services =[]
+            // let banner = []
+            // try{
+            //     const resService = await apiClient.get('/services')
+            //     services = [...(resService.data?.data || [] )]
+            // }catch(err){
+            //     console.log('erro',err)
+            // }
+            // try{
+            //     const resBanner = await apiClient.get('/banner')
+            //     banner = [...(resBanner.data?.data || [] )]
+            // }catch(err){
+            //     console.log('erro',err)
+            // }
+            // return {services, banner}
             
         }
         
