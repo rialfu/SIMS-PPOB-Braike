@@ -1,13 +1,32 @@
 import defaultPhoto from '../assets/images/Profile Photo.png'
 import { useDispatch, useSelector } from 'react-redux';
 import background from '../assets/images/Background Saldo.png'
-import { updateSee } from '../state/auth-reducer';
+import { updateSaldo, updateSee } from '../state/auth-reducer';
 import Header from './header'
 import { formatterIDR } from '../parameter/tools';
+import { useState } from 'react';
+import apiClient from '../parameter/axios-global';
 const Layout = ({ children }) => {
     const dispatch = useDispatch()
-    
+    const [statusData, setStatusData] = useState({
+        'isLoad':false,
+        // 'statusMoney':{
+        //     'isLoad':false,
+        // }
+    })
     const auth = useSelector((state)=>state.auth)
+    const reloadMoney = async()=>{
+        if(statusData.isLoad) return;
+        setStatusData({isLoad:true})
+        try{
+            const res3 =await apiClient.get('/balance', ) 
+            let balance = res3.data?.data['balance'] ?? 0
+            dispatch(updateSaldo(balance))
+        }catch(err){
+            
+        }
+        setStatusData({...statusData, isLoad:false})
+    }
     return (
     <>
         <Header/>
@@ -20,7 +39,11 @@ const Layout = ({ children }) => {
                 </div>
                 <div className="col-span-12 sm:col-span-6 md:col-span-6">
                     <div className="w-full bg-red-500 p-4 rounded-lg" style={{backgroundImage:`url(${background})`, backgroundRepeat:'no-repeat', backgroundSize:'100% 100%'}}>
-                    <p className="text-white text-sm mb-3">Saldo Anda</p>
+                    <div className="flex">
+                        <p className="text-white text-sm mb-3">Saldo Anda </p>
+                        <p class="ms-2 text-white text-sm hover:text-gray-300 cursor-pointer" onClick={reloadMoney}>{statusData.isLoad? 'Please wait':'reload?'}</p>    
+                    </div>
+                    
                     <p className="text-4xl text-white mb-5">{auth.see ? formatterIDR.format(auth.balance):`Rp *******`}</p>
                     <div className="flex">
                         <p className="text-white text-md mb-2 me-2 cursor-pointer " onClick={()=>dispatch(updateSee(!auth.see))}>{auth.see? 'Tutup Saldo':'Lihat Saldo'} </p>
